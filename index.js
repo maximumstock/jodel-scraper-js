@@ -12,7 +12,7 @@ const knex = require('knex')(config.knex);
 
 feeds.forEach(feed => {
 	locations.slice(0,4).forEach(location => {
-		location.accuracy = 0;
+		location.accuracy = 100;
 		const s = new DynamicScraper(feed, location);
 
 		function handler(jodels) {
