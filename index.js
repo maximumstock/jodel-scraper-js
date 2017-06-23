@@ -11,52 +11,52 @@ const logger = require('./lib/logger');
 const knex = require('knex')(config.knex);
 
 feeds.forEach(feed => {
-	locations.slice(0,4).forEach(location => {
-		location.accuracy = 100;
-		const s = new DynamicScraper(feed, location);
+  locations.slice(0, 1).forEach(location => {
+    location.accuracy = 0;
+    const s = new DynamicScraper(feed, location);
 
-		function handler(jodels) {
+    function handler(jodels) {
 
-			logger.info(`${s.getDescription()}: Processing ${jodels.length} Jodels`);
+      logger.info(`${s.getDescription()}: Processing ${jodels.length} Jodels`);
 
-			const data = jodels.map(jodel => {
-				return {
-					latitude: location.latitude,
-					longitude: location.longitude,
-					location: location.name,
-					feed: feed,
-					created_at: new Date(),
-					updated_at: new Date(),
-					data: jodel
-				}
-			}).forEach(jodel => {
-				knex('jodels')
-					.whereRaw('data->>\'post_id\' = ?', jodel.data.post_id)
-					.where({
-						latitude: location.latitude,
-						latitude: location.longitude,
-						location: location.name,
-						feed: feed
-					})
-					.then(results => {
-						if(results.length > 0) {
-							const ids = results.map(e => e.id);
-							return knex('jodels').del().whereIn('id', ids);
-						}
-					})
-					.then(() => {
-						return knex('jodels').insert(jodel);
-					})
-					.catch(error => {
-						logger.error(error);
-					});
-			});
-		
-		}
+      const data = jodels.map(jodel => {
+        return {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          location: location.name,
+          feed: feed,
+          created_at: new Date(),
+          updated_at: new Date(),
+          data: jodel
+        }
+      }).forEach(jodel => {
+        knex('jodels')
+          .whereRaw('data->>\'post_id\' = ?', jodel.data.post_id)
+          .where({
+            latitude: location.latitude,
+            latitude: location.longitude,
+            location: location.name,
+            feed: feed
+          })
+          .then(results => {
+            if (results.length > 0) {
+              const ids = results.map(e => e.id);
+              return knex('jodels').del().whereIn('id', ids);
+            }
+          })
+          .then(() => {
+            return knex('jodels').insert(jodel);
+          })
+          .catch(error => {
+            logger.error(error);
+          });
+      });
 
-		s.subscribe(handler);
+    }
 
-		s.start();
+    s.subscribe(handler);
 
-	});
+    s.start();
+
+  });
 });
