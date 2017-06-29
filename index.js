@@ -9,9 +9,11 @@ const DynamicScraper = require('./lib/scraper');
 const config = require('./config');
 const logger = require('./lib/logger');
 const knex = require('knex')(config.knex);
+const api = require('./lib/api');
+
 
 feeds.forEach(feed => {
-  locations.slice(0, 1).forEach(location => {
+  locations.slice(0, 3).forEach(location => {
     location.accuracy = 0;
     const s = new DynamicScraper(feed, location);
 
