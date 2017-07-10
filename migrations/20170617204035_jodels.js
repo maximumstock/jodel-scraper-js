@@ -11,8 +11,8 @@ exports.up = function (knex, Promise) {
     knex.schema.createTableIfNotExists('jodels', function (t) {
       t.bigIncrements('id').primary();
       // metadata for which the Jodel was acquired
-      t.decimal('latitude', 8, 6);
-      t.decimal('longitude', 8, 6);
+      t.decimal('latitude', 10, 8);
+      t.decimal('longitude', 10, 8);
       t.text('location');
       t.text('feed');
       t.timestamp('created_at');
