@@ -36,7 +36,7 @@ feeds.forEach(feed => {
           .whereRaw('data->>\'post_id\' = ?', jodel.data.post_id)
           .where({
             latitude: location.latitude,
-            latitude: location.longitude,
+            longitude: location.longitude,
             location: location.name,
             feed: feed
           })
