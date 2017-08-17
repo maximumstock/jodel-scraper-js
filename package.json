@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"start": "node index.js | ./node_modules/bunyan/bin/bunyan",
+    "start": "node index.js | ./node_modules/bunyan/bin/bunyan",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Maximilian Stock",
@@ -12,6 +12,7 @@
   "dependencies": {
     "bunyan": "^1.8.10",
     "knex": "^0.13.0",
+    "moment": "^2.18.1",
     "pg": "^6.2.4",
     "request": "^2.81.0",
     "superagent": "^3.5.2"
