@@ -11,16 +11,17 @@ const default_config = {
 
     JODEL_API_HOST: 'https://api.go-tellm.com',
     JODEL_API_V2: 'https://api.go-tellm.com/api/v2',
+    JODEL_API_V3: 'https://api.go-tellm.com/api/v3',
 
 		// Android client version of Jodel, see Google PlayStore
-    CLIENT_VERSION: '4.51.2',
+    CLIENT_VERSION: '4.55.1',
 		// static ID that is identical for all Android client versions
 		// (see various implementations on GitHub)
     CLIENT_ID: '81e8a76e-1e02-4d17-9ba0-8a7020261b26',
 		// structurally a SHA256 hash, but only works with `CLIENT_ID` above
     DEVICE_UID: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     // signing key for HMAC generation for this client version
-    SECRET: 'GnAXvETHFDbDfhngjDYEkszdqZowDpWsWuCectMJ',
+    SECRET: 'SUJlYgihNxTmcfdrEcjROozfNemiqJSjYpoJJMUC',
 		// apparently 100 is the maximum number of Jodels one can receive per request
 		MAX_JODELS_PER_REQUEST: 100
 
