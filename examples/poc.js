@@ -15,15 +15,6 @@
  * token.
  */
 
-
-
-/**
- * RESULTS OF ABOVE TESTS - 2017-08-21
- *
- * Apparently, overriding location coordinates via query parameters does not
- * affect the resulting feed data
- */
-
 const feeds     = ['recent']; //, 'popular', 'discussed'];
 const locations = require('../lib/locations');
 const config    = require('../config');
@@ -35,9 +26,10 @@ const api       = require('../lib/api');
 // later on we'll try to overwrite our desired request location via query
 // parameters
 const baseLocation = locations[1];
+const device_uid = config.DEVICE_UID || api.generate_deviceuid();
 
 // request a token based on set base location
-api.request_token(baseLocation.latitude, baseLocation.longitude)
+api.request_token(device_uid, baseLocation.latitude, baseLocation.longitude)
   .then(response => {
     const token = response.body.access_token;
     // for each feed-location combination that we want to scrape, get the
@@ -45,10 +37,9 @@ api.request_token(baseLocation.latitude, baseLocation.longitude)
     // <scraping-location, list-of-found-city-names> tuple
     feeds.forEach(feed => {
       locations.slice(0, 2).forEach(location => {
-        api.get_feed_batch(token, {lat: location.latitude, lng: location.longitude, stickies: false, home: false, skipHometown: false})
+        api.get_feed_batch(token)
           .then(response => {
-            // grab all jodels from the response
-            const jodels = response.body.recent.concat(response.body.replied).concat(response.body.voted);
+            const jodels = response.body.posts;
             // find all unique location names from unique jodels
             const foundLocations = jodels.map(post => {
               return post.location.name;
