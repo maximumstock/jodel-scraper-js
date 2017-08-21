@@ -10,9 +10,9 @@
   "author": "Maximilian Stock",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "bunyan": "^1.8.10",
     "knex": "^0.13.0",
-    "moment": "^2.18.1",
     "pg": "^6.2.4",
     "request": "^2.81.0",
     "superagent": "^3.5.2"
