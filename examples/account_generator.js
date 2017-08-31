@@ -7,7 +7,7 @@
 const api = require('../lib/api');
 const locations = require('../lib/locations');
 
-const QUANTITY = 100;
+const QUANTITY = 5;
 
 
 // Generate @QUANTITY device_uids
@@ -23,7 +23,7 @@ const location = locations[0];
 
 const promisesToResolve = device_uids.map(duid => {
   return {
-    promise: api.request_token(duid, location.latitude, location.longitude),
+    promise: api.request_token(duid, location.latitude, location.longitude, location.name, location.country_code),
     device_uid: duid
   };
 });
@@ -40,7 +40,7 @@ function register(remainingPromises) {
   next.promise
     .then(response => {
       if(response.statusCode === 200) {
-        console.log(next.device_uid);
+        console.log('Successfully registered ' + next.device_uid);
         return register(remainingPromises.slice(1, remainingPromises.length));
       }
     })
