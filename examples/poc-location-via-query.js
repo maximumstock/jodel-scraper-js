@@ -1,18 +1,18 @@
 /**
  * @file Proof-of-Concept Example
  *
- * The following code requests an access token and scrapes some feed samples
- * for a given set of locations. It then reduces the gathered feed data to
- * a two-tuple. Said two-tuple consists of the location that that was used
- * for scraping and a list of city names that were found via Jodels API when
- * scraping for said first location.
- *
  * Basically this snippet of code tests whether we can scrape different
  * locations with the same access token. As access tokens usually encode
  * the location information that they were created with internally, we need
  * to find a way to override this location information so the API gives us
  * the feed results for a location other than the one encoded in the access
  * token.
+ *
+ * The following code requests an access token and scrapes some feed samples
+ * for a given set of locations. It then reduces the gathered feed data to
+ * a two-tuple. Said two-tuple consists of the location that that was used
+ * for scraping and a list of city names that were found via Jodels API when
+ * scraping for said first location.
  */
 
 
