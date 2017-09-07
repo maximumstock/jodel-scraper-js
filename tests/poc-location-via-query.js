@@ -26,8 +26,6 @@
 
 const feeds     = ['recent']; //, 'popular', 'discussed'];
 const locations = require('../lib/locations');
-const config    = require('../config');
-const knex      = require('knex')(config.knex);
 const api       = require('../lib/api');
 
 // set a base location that is passed when requesting our access token

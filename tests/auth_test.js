@@ -3,7 +3,6 @@
  */
 
 
-const config    = require('../config');
 const api       = require('../lib/api');
 const locations = require('../lib/locations');
 
