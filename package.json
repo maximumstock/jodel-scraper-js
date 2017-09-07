@@ -2,15 +2,14 @@
   "name": "jodel-scraper",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "start": "echo \"No setup specified\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Maximilian Stock",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "bunyan": "^1.8.10",
     "superagent": "^3.5.2"
   }
