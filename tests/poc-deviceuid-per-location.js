@@ -1,7 +1,12 @@
 /**
- * @file Proof-of-Concept Example
- *
- *
+ * @file Proof-of-Concept example for using one distinct device_uid for each
+ * location to scrape. 
+ * 
+ * Basically, this creates multiple scrapers - each with a distinct location
+ * and device_uid - and logs the found cities in the Jodels each scraper
+ * instance collected. If all scrapers find different city names - given they
+ * each was given a different target location - we know that scraping one
+ * location per device_uid works.
  */
 
 const feeds       = ['recent', 'popular', 'discussed'];
