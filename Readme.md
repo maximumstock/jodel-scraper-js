@@ -1,5 +1,54 @@
 # jodel-scraper-js
 
-Yet another Jodel(TM)-scraping project implementation.
+A scraper project for the official Jodel™ application built with Node.js.
 
-__NOTE:__ Account generation with `examples/account-generator.js` does not work as of now.
+## Contents
+- `lib/scraper.js` - an ES6 class implementing a scraper
+- `lib/api.js` - a small client implementation for authorization and fetching
+Jodels and feeds from the official API
+- `lib/locations.js` - a collection of big German cities and their geocoordinates
+- `device_uids.json` - a list of 100 registered device_uids for scraping purposes
+- `examples/file-export-example.js` - an example on how to use the scraper which
+exports the collected Jodels to a JSON file
+- `tests` - contains some code snippets to test API and code functionality
+
+## Quickstart
+Instantiate a new scraper instance via:
+	
+	const scraper = new DynamicScraper(device_uid, feed, locationConfig, ?scraperConfig)
+
+A description of the constructor parameters can be found in the constructor section of `lib/scraper.js`.
+
+Subscribe functions as event handlers to the scraper, which will get called upon successful Jodel collection. Each handler gets passed the collected Jodels as an array and the scraper itself with all its internal properties at that point in time.
+
+	const handler = function(data, scraper) {
+		// handle data
+		console.log(`Found ${data.length} Jodels for ${scraper.location.name}/${scraper.feed}`)
+		// ...
+	}
+	
+	scraper.subscribe(handler);
+	
+Start the actual scraping process via:
+
+	scraper.start();
+	
+Stop the scraper at the next scraping tick via:
+
+	scraper.stop();
+	
+Manually invoke scraping after `seconds` via:
+
+	scraper.reschedule(seconds);
+	
+Manually request a new token via:
+
+	scraper.authorize(); // returns a Promise
+	
+## Features
+- Scrape any feed (`discussed`, `popular` or `recent`) for a given location
+- Supports dynamic interval configuration
+
+## Examples
+- see `lib/scraper.js` for an explanation of configurable parameters
+- see `examples/file-export-example.js` for a simple usage example
