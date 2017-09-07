@@ -27,7 +27,6 @@
 const feeds     = ['recent']; //, 'popular', 'discussed'];
 const locations = require('../lib/locations');
 const config    = require('../config');
-const logger    = require('../lib/logger');
 const knex      = require('knex')(config.knex);
 const api       = require('../lib/api');
 
@@ -68,5 +67,5 @@ api.request_token(device_uid, baseLocation.latitude, baseLocation.longitude)
     });
   })
   .catch(error => {
-    logger.error(error);
+    console.error(error);
   });
