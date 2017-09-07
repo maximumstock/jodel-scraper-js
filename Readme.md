@@ -59,3 +59,6 @@ Therefore client version in `config/index.js`, which is sent as a HTTP header wi
 every request, needs to be updated regularly. The most recent version can be
 found on the [Google Play Store](https://play.google.com/store/apps/details?id=com.tellm.android.app&hl=de)
 page of the official Jodel application.
+
+This also means that you need to update the HMAC signing key in `config/index.js`
+from time to time.
