@@ -35,7 +35,8 @@ const api       = require('../lib/api');
 // later on we'll try to overwrite our desired request location via query
 // parameters
 const baseLocation = locations[1];
-const device_uid = config.DEVICE_UID || api.generate_deviceuid();
+// just some already registered device_uid for testing
+const device_uid = 'ebed57121e34e6979b6031d332ddaa658e99e2fb6c199a27113fcee96b12ab76';
 
 // request a token based on set base location
 api.request_token(device_uid, baseLocation.latitude, baseLocation.longitude)
