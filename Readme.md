@@ -52,3 +52,10 @@ Manually request a new token via:
 ## Examples
 - see `lib/scraper.js` for an explanation of configurable parameters
 - see `examples/file-export-example.js` for a simple usage example
+
+## Notice
+Jodel regularly deprecates old client versions.
+Therefore client version in `config/index.js`, which is sent as a HTTP header with 
+every request, needs to be updated regularly. The most recent version can be
+found on the [Google Play Store](https://play.google.com/store/apps/details?id=com.tellm.android.app&hl=de)
+page of the official Jodel application.
