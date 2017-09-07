@@ -20,8 +20,8 @@ const default_config = {
     CLIENT_ID: '81e8a76e-1e02-4d17-9ba0-8a7020261b26',
     // signing key for HMAC generation for this client version
     SECRET: 'mpOuBBukdOtDfFFOOxivviwYRTBoKiRRUayxYTHh',
-		// apparently 100 is the maximum number of Jodels one can receive per request
-		MAX_JODELS_PER_REQUEST: 100
+    // apparently 100 is the maximum number of Jodels one can receive per request
+    MAX_JODELS_PER_REQUEST: 100
 
 };
 
