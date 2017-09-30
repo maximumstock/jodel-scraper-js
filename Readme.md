@@ -16,7 +16,7 @@ and how said signing key can be obtained. With said signing key, `device_uid`s
 (basically random SHA256 hashes) can be used for requesting an API token.
 
 ## Contents
-- `lib/scraper.js` - an ES6 class implementing a scraper
+- `lib/scraper.js` - an ES6 class implementing a dynamic scraper that automatically regulates scraping intervals based on last results
 - `lib/api.js` - a small client implementation for authorization and fetching
 Jodels and feeds from the official API
 - `lib/locations.js` - a collection of big German cities and their geocoordinates
