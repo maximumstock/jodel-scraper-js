@@ -2,15 +2,18 @@
 
 A scraper project for the official Jodel™ application built with Node.js.
 
-This project assumes you already know how Jodel's API works 
-(especially authorization) and that you have successfully obtained
-a valid HMAC signing key, which has to be datamined from the official
-Jodel application. If you do not, look into Christian Fibich's 
+This project assumes that you have successfully obtained a valid
+HMAC signing key and or an already registered `device_uid` for
+each scraper you start.
+
+If you do not know what this is about, please refer to Christian Fibich's 
 [OJOC](https://bitbucket.org/cfib90/ojoc) project.
 Authorization can only be assured by datamining an internal signing key
-that is used for header signing (for calculating a [HMAC](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code),
+that is used for header signing (for calculating a 
+[HMAC](https://en.wikipedia.org/wiki/Hash-based_message_authentication_code),
 to be precise). OJOC somewhat explains how everything is tied together
-and how said signing key can be obtained.
+and how said signing key can be obtained. With said signing key, `device_uid`s
+(basically random SHA256 hashes) can be used for requesting an API token.
 
 ## Contents
 - `lib/scraper.js` - an ES6 class implementing a scraper
