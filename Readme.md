@@ -27,7 +27,7 @@ exports the collected Jodels to a JSON file
 ## Quickstart
 Instantiate a new scraper instance via:
 	
-	const scraper = new DynamicScraper(device_uid, feed, locationConfig, ?scraperConfig)
+	const scraper = new DynamicScraper(device_uid, locationConfig, ?scraperConfig)
 
 A description of the constructor parameters can be found in the constructor section of `lib/scraper.js`.
 
@@ -35,7 +35,7 @@ Subscribe functions as event handlers to the scraper, which will get called upon
 
 	const handler = function(data, scraper) {
 		// handle data
-		console.log(`Found ${data.length} Jodels for ${scraper.location.name}/${scraper.feed}`)
+		console.log(`Found ${data.length} Jodels for ${scraper.location.name}`)
 		// ...
 	}
 	
@@ -58,7 +58,7 @@ Manually request a new token via:
 	scraper.authorize(); // returns a Promise
 	
 ## Features
-- Scrape any feed (`discussed`, `popular` or `recent`) for a given location
+- Scrape all Jodels (via feeds `discussed`, `popular` or `recent`) for a given location
 - Supports dynamic interval configuration
 
 ## Examples

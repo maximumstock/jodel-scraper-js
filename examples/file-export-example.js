@@ -22,13 +22,13 @@ const scraperConfig = {
   max_overlap_step: 5
 };
 
-const scraper = new DynamicScraper(device_uid, 'recent', location, scraperConfig);
+const scraper = new DynamicScraper(device_uid, location, scraperConfig);
 
 // Add function handlers to process the collected data
 // Each subscribed function gets passed the collected data and the instance
 // of the scraper with all its state at that point in time
 scraper.subscribe((data, scraper) => {
-  console.log(`Collected ${data.length} Jodels for ${scraper.location.name}/${scraper.feed}`);
+  console.log(`Collected ${data.length} Jodels for ${scraper.location.name}`);
   console.log('Storing Jodels to file...')
   // For simplicity just overwrite the file with every new batch
   fs.writeFileSync('exported_jodels.json', JSON.stringify(data), 'utf-8')
