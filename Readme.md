@@ -21,6 +21,7 @@ and how said signing key can be obtained. With said signing key, `device_uid`s
 Jodels and feeds from the official API
 - `lib/locations.js` - a collection of big German cities and their geocoordinates
 - `examples/file-export-example.js` - an example on how to use the scraper which
+- `examples/postgres-export-example` - an example on how to use the scraper with PostgreSQL
 exports the collected Jodels to a JSON file
 - `tests` - contains some code snippets to test API and code functionality
 
@@ -55,8 +56,14 @@ Manually invoke scraping after `seconds` via:
 	
 Manually request a new token via:
 
-	scraper.authorize(); // returns a Promise
-	
+	scraper.authorize() // returns a Promise
+	  .then(function() {
+      // The instance now has a new access token
+    })
+    .catch(function(error) {
+      // Some error occured
+    });
+
 ## Features
 - Scrape all Jodels (via feeds `discussed`, `popular` or `recent`) for a given location
 - Supports dynamic interval configuration
