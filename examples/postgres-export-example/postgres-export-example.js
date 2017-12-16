@@ -49,10 +49,10 @@ async function insertSingleJodel(jodel) {
 for(let i = 0; i < 20; i++) {
   const location    = locations[i];
   const device_uid  = device_uids[i];
-  const s = new DynamicScraper(device_uid, location);
+  const options = {
+    windup_delay: i*2 // don't start all at the same time, to avoid rate-limiting
+  };
+  const s = new DynamicScraper(device_uid, location, options);
   s.subscribe(handler);
-  // Only start one scraper every two seconds, to not get rate-limited instantly
-  setTimeout(() => {
-    s.start();
-  }, i*2000);
+  s.start()
 }
