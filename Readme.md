@@ -27,7 +27,23 @@ exports the collected Jodels to a JSON file
 
 ## Quickstart
 Instantiate a new scraper instance via:
-	
+
+  const scraperConfig = {
+    // starting interval [s]
+    interval: 60,
+    // minimum overlap threshold
+    min_overlap: 3,
+    // maximum overlap threshold
+    max_overlap: 10,
+    // seconds to decrease/increase interval
+    // when min_overlap/max_overlap is crossed,
+    // respectively
+    min_overlap_step: 5,
+    max_overlap_step: 5,
+    // seconds to wait after initial
+    // crawler start 
+    windup_delay: 0
+  }
 	const scraper = new DynamicScraper(device_uid, locationConfig, ?scraperConfig)
 
 A description of the constructor parameters can be found in the constructor section of `lib/scraper.js`.
