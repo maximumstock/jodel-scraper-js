@@ -19,7 +19,8 @@ const scraperConfig = {
   min_overlap: 5,
   max_overlap: 10,
   min_overlap_step: 6,
-  max_overlap_step: 5
+  max_overlap_step: 5,
+  windup_delay: 3
 };
 
 const scraper = new DynamicScraper(device_uid, location, scraperConfig);
