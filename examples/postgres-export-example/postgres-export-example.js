@@ -70,19 +70,24 @@ const commentScraper = new CommentScraper(device_uids[device_uids.length - 1], l
 commentScraper.subscribe(commentHandler);
 triggerComments();
 
+function sleep(ms) {
+  return new Promise((resolve, reject) => {setTimeout(resolve, ms);});
+}
 
 async function triggerComments() {
   try {
-    const result = await knex.raw(`SELECT * FROM jodels WHERE processed is false and parent is null LIMIT 10`);
+    const result = await knex.raw(`SELECT * FROM jodels WHERE processed is false and parent is null and created_at < NOW() - interval '2 days' LIMIT 10`);
     if (result.rows.length === 0) {
-      await setTimeout(() => {}, 60000)
+      console.log(`Waiting for new Jodels for comment processing`);
+      await sleep(60000);
       return triggerComments();
     }
     const jodel_ids = result.rows.map(j => j.post_id);
+    console.log(`Scrape new comments: ${jodel_ids.length}`)
     commentScraper.scrape(jodel_ids, false);
   } catch (e) {
     console.error(e);
-    await setTimeout(() => {}, 5000)
+    await sleep(2000)
     return triggerComments();
   }
 }
@@ -102,14 +107,18 @@ async function commentHandler(jodel_ids, results) {
       });
     });
     // insert comments
-    await knex('jodels').insert(comments);
+    comments.forEach(async c => {
+      await insertSingleJodel(c);
+    });
     // update parent jodel
     await knex('jodels').update({processed: true}).whereIn('post_id', jodel_ids);
     // explicit sleep to make rate-limiting less probable
-    await setTimeout(() => {}, 2000);
+    await sleep(1000);
     triggerComments();
   } catch (e) {
     console.error(e);
+    await sleep(2000)
+    return triggerComments();
   }
 }
 
