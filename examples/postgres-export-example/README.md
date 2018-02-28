@@ -11,3 +11,5 @@ scraped Jodels are stored in a Postgres database.
 The database credentials can be configured via the
 environment variable `DB_CONNECTION`, which expects
 a connection string like `postgres://jodel:jodel@localhost:5432/jodel-export-example`.
+
+The used database migration can be found in `migration.sql`.
