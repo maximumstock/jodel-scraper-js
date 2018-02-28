@@ -9,6 +9,7 @@ const knex = require('knex')({
   connection: process.env.DB_CONNECTION
 });
 const DynamicScraper  = require('../../lib/scraper');
+const CommentScraper  = require('../../lib/comment-scraper');
 const locations       = require('../../lib/locations');
 const device_uids     = require('../../device_uids.json');
 
@@ -46,7 +47,7 @@ async function insertSingleJodel(jodel) {
 
 // Create several scrapers for several locations, with one device_uid each and
 // subscribe our handler function
-for(let i = 0; i < 20; i++) {
+for (let i = 0; i < 20; i++) {
   const location    = locations[i];
   const device_uid  = device_uids[i];
   const options = {
@@ -54,5 +55,61 @@ for(let i = 0; i < 20; i++) {
   };
   const s = new DynamicScraper(device_uid, location, options);
   s.subscribe(handler);
-  s.start()
+  s.start();
 }
+
+
+/**
+ * COMMENT SCRAPING BELOW
+ * 
+ * Comment Jodels are not included in the feed data, so for each Jodel, we have
+ * to make another API request to get all data, including the comments.
+ */
+
+const commentScraper = new CommentScraper(device_uids[device_uids.length - 1], locations[0]);
+commentScraper.subscribe(commentHandler);
+triggerComments();
+
+
+async function triggerComments() {
+  try {
+    const result = await knex.raw(`SELECT * FROM jodels WHERE processed is false and parent is null LIMIT 10`);
+    if (result.rows.length === 0) {
+      await setTimeout(() => {}, 60000)
+      return triggerComments();
+    }
+    const jodel_ids = result.rows.map(j => j.post_id);
+    commentScraper.scrape(jodel_ids, false);
+  } catch (e) {
+    console.error(e);
+    await setTimeout(() => {}, 5000)
+    return triggerComments();
+  }
+}
+
+async function commentHandler(jodel_ids, results) {
+  try {
+    const comments = [];
+    results.forEach(jodel => {
+      jodel.children.forEach(comment => {
+        comments.push({
+          post_id: comment.post_id,
+          data: comment,
+          parent: jodel.post_id,
+          processed: true,
+          location: jodel.location
+        });
+      });
+    });
+    // insert comments
+    await knex('jodels').insert(comments);
+    // update parent jodel
+    await knex('jodels').update({processed: true}).whereIn('post_id', jodel_ids);
+    // explicit sleep to make rate-limiting less probable
+    await setTimeout(() => {}, 2000);
+    triggerComments();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
