@@ -4,3 +4,6 @@ CREATE TABLE IF NOT EXISTS jodels (
   location jsonb not null,
   created_at timestamp DEFAULT NOW()
 );
+
+ALTER TABLE jodels ADD COLUMN parent text DEFAULT null;
+ALTER TABLE jodels ADD CONSTRAINT jodels_fkey_parent FOREIGN KEY(parent) REFERENCES jodels(post_id);
