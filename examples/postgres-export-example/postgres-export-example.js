@@ -8,6 +8,7 @@ const knex = require('knex')({
   client: 'postgres',
   connection: process.env.DB_CONNECTION
 });
+const logger          = require('../../lib/logger');
 const DynamicScraper  = require('../../lib/scraper');
 const CommentScraper  = require('../../lib/comment-scraper');
 const locations       = require('../../lib/locations');
@@ -15,7 +16,7 @@ const device_uids     = require('../../device_uids.json');
 
 // Handler function that gets passed to each scraper instance
 async function handler(jodels, scraper) {
-  console.log(`Handling ${jodels.length} Jodels`);
+  logger.info(`Handling ${jodels.length} Jodels`);
   // Map Jodels to the database table structure
   jodels = jodels.map(j => {
     return {
@@ -78,15 +79,15 @@ async function triggerComments() {
   try {
     const result = await knex.raw(`SELECT * FROM jodels WHERE processed is false and parent is null and created_at < NOW() - interval '2 days' LIMIT 10`);
     if (result.rows.length === 0) {
-      console.log(`Waiting for new Jodels for comment processing`);
+      logger.info(`Waiting for new Jodels for comment processing`);
       await sleep(60000);
       return triggerComments();
     }
     const jodel_ids = result.rows.map(j => j.post_id);
-    console.log(`Scrape new comments: ${jodel_ids.length}`)
+    logger.info(`Scrape new comments: ${jodel_ids.length}`)
     commentScraper.scrape(jodel_ids, false);
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     await sleep(2000)
     return triggerComments();
   }
@@ -116,7 +117,7 @@ async function commentHandler(jodel_ids, results) {
     await sleep(1000);
     triggerComments();
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     await sleep(2000)
     return triggerComments();
   }
