@@ -62,7 +62,7 @@ for (let i = 0; i < 20; i++) {
 
 /**
  * COMMENT SCRAPING BELOW
- * 
+ *
  * Comment Jodels are not included in the feed data, so for each Jodel, we have
  * to make another API request to get all data, including the comments.
  */
@@ -84,11 +84,11 @@ async function triggerComments() {
       return triggerComments();
     }
     const jodel_ids = result.rows.map(j => j.post_id);
-    logger.info(`Scrape new comments: ${jodel_ids.length}`)
+    logger.info(`Scrape new comments: ${jodel_ids.length}`);
     commentScraper.scrape(jodel_ids, false);
   } catch (e) {
     logger.error(e);
-    await sleep(2000)
+    await sleep(2000);
     return triggerComments();
   }
 }
@@ -118,7 +118,7 @@ async function commentHandler(jodel_ids, results) {
     triggerComments();
   } catch (e) {
     logger.error(e);
-    await sleep(2000)
+    await sleep(2000);
     return triggerComments();
   }
 }
