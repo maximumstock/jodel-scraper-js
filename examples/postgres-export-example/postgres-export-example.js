@@ -98,6 +98,9 @@ async function commentHandler(jodel_ids, results) {
     const comments = [];
     results.forEach(jodel => {
       jodel.children.forEach(comment => {
+        if (comment.message) {
+          comment.message = comment.message.split("\u0000").join("");
+        }
         comments.push({
           post_id: comment.post_id,
           data: comment,
