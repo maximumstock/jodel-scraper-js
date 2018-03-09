@@ -41,7 +41,7 @@ async function insertSingleJodel(jodel) {
     if(e.code === '23505') {
       return;
     } else {
-      throw e;
+      logger.error(e);
     }
   } 
 }
