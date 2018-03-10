@@ -85,7 +85,7 @@ async function triggerComments() {
     }
     const jodel_ids = result.rows.map(j => j.post_id);
     logger.info(`Scrape new comments: ${jodel_ids.length}`);
-    commentScraper.scrape(jodel_ids, false);
+    await commentScraper.scrape(jodel_ids, false);
   } catch (e) {
     logger.error(e);
     await sleep(2000);
