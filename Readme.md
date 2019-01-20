@@ -20,7 +20,7 @@ and how said signing key can be obtained. With said signing key, `device_uid`s
 - `lib/api.js` - a small client implementation for authorization and fetching
 Jodels and feeds from the official API
 - `lib/locations.js` - a collection of big German cities and their geocoordinates
-- `examples/file-export-example.js` - an example on how to use the scraper which
+- `examples/file-export-example.js` - an example on how to use the scraper
 - `examples/postgres-export-example` - an example on how to use the scraper with PostgreSQL
 exports the collected Jodels to a JSON file
 - `tests` - contains some code snippets to test API and code functionality
