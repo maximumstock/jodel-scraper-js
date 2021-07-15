@@ -28,57 +28,68 @@ exports the collected Jodels to a JSON file
 ## Quickstart
 Instantiate a new scraper instance via:
 
-  const scraperConfig = {
-    // starting interval [s]
-    interval: 60,
-    // minimum overlap threshold
-    min_overlap: 3,
-    // maximum overlap threshold
-    max_overlap: 10,
-    // seconds to decrease/increase interval
-    // when min_overlap/max_overlap is crossed,
-    // respectively
-    min_overlap_step: 5,
-    max_overlap_step: 5,
-    // seconds to wait after initial
-    // crawler start 
-    windup_delay: 0
-  }
-	const scraper = new DynamicScraper(device_uid, locationConfig, ?scraperConfig)
+```js
+const scraperConfig = {
+  // starting interval [s]
+  interval: 60,
+  // minimum overlap threshold
+  min_overlap: 3,
+  // maximum overlap threshold
+  max_overlap: 10,
+  // seconds to decrease/increase interval
+  // when min_overlap/max_overlap is crossed,
+  // respectively
+  min_overlap_step: 5,
+  max_overlap_step: 5,
+  // seconds to wait after initial cralwer start
+  windup_delay: 0
+}
+const scraper = new DynamicScraper(device_uid, locationConfig, ?scraperConfig)	
+```
 
 A description of the constructor parameters can be found in the constructor section of `lib/scraper.js`.
 
 Subscribe functions as event handlers to the scraper, which will get called upon successful Jodel collection. Each handler gets passed the collected Jodels as an array and the scraper itself with all its internal properties at that point in time.
 
-	const handler = function(data, scraper) {
-		// handle data
-		console.log(`Found ${data.length} Jodels for ${scraper.location.name}`)
-		// ...
-	}
+```js
+const handler = function(data, scraper) {
+	// handle data
+	console.log(`Found ${data.length} Jodels for ${scraper.location.name}`)
+	// ...
+}
 	
-	scraper.subscribe(handler);
-	
+scraper.subscribe(handler);
+```
+
 Start the actual scraping process via:
 
-	scraper.start();
+```js
+scraper.start();
+```
 	
 Stop the scraper at the next scraping tick via:
 
-	scraper.stop();
-	
+```js
+scraper.stop();
+```
+
 Manually invoke scraping after `seconds` via:
 
-	scraper.reschedule(seconds);
+```js
+scraper.reschedule(seconds);
+```
 	
 Manually request a new token via:
 
-	scraper.authorize() // returns a Promise
-	  .then(function() {
-      // The instance now has a new access token
-    })
-    .catch(function(error) {
-      // Some error occured
-    });
+```js
+scraper.authorize()
+  .then(function() {
+    // The instance now has a new access token
+  })
+  .catch(function(error) {
+    // Some error occured
+  });
+```
 
 ## Features
 - Scrape all Jodels (via feeds `discussed`, `popular` or `recent`) for a given location
