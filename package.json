@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "bunyan": "^1.8.12",
-    "knex": "^0.13.0",
+    "knex": "^2.4.0",
     "pg": "^7.3.0",
     "superagent": "^3.5.2"
   }
